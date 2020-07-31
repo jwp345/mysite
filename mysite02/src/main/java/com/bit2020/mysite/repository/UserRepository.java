@@ -49,6 +49,55 @@ public class UserRepository {
 		}
 		return result;
 	}
+	public UserVo findByNo(Long no) {
+		UserVo result = null;
+		ResultSet rs = null;
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			
+			// 1. JDBC Driver(MariaDB Driver)
+			connection = getConnection();
+			
+			// 3. sql 준비
+			String sql = "select no, name, email, gender from user where no=?";
+			pstmt = connection.prepareStatement(sql);
+			
+			//4. 바인딩
+			pstmt.setLong(1, no);
+
+			// 4. sql 실행
+			rs = pstmt.executeQuery();
+			
+			// 5. 결과 가져오기
+			if(rs.next()) {
+				result = new UserVo();
+				
+				result.setNo(rs.getLong(1));
+				result.setName(rs.getString(2));
+				result.setEmail(rs.getString(3));
+				result.setGender(rs.getString(4));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("에러:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 	public UserVo findByEmailAndPassword(String email, String password) {
 		UserVo result = null;
 		ResultSet rs = null;
@@ -101,6 +150,48 @@ public class UserRepository {
 		
 		return result;
 	}
+	public boolean updateByEmail(UserVo vo) {
+		boolean result = false;
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			
+			// 1. JDBC Driver(MariaDB Driver)
+			connection = getConnection();
+			
+			// 3. sql 준비
+			String sql = "update user set name=?, password=password(?), gender=? where email=?";
+			pstmt = connection.prepareStatement(sql);
+
+			//4. 바인딩
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getGender());
+			pstmt.setString(4, vo.getEmail());
+			
+			int count = pstmt.executeUpdate();
+			
+			if(count > 0)
+				result = true;
+			
+		} catch (SQLException e) {
+			System.out.println("에러:" + e);
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	private Connection getConnection(){
 		Connection connection = null;
 		

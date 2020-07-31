@@ -18,7 +18,6 @@ public class UserController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 
 		String action = request.getParameter("a");
 
@@ -71,7 +70,32 @@ public class UserController extends HttpServlet {
 			
 			MVCUtil.redirect(request.getContextPath(), request, response);
 
-		} else {
+		} else if ("updateform".equals(action)) {
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			UserVo userVo = new UserRepository().findByNo(authUser.getNo());
+			
+			request.setAttribute("userVo", userVo);
+			MVCUtil.forward("user/updateform", request, response);	
+		} else if ("update".equals(action)) {
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			
+			String name = request.getParameter("name");
+			String password = request.getParameter("password");
+			String gender = request.getParameter("gender");
+
+			UserVo userVo = new UserRepository().findByNo(authUser.getNo());
+			userVo.setName(name);
+			userVo.setPassword(password);
+			userVo.setGender(gender);
+			new UserRepository().updateByEmail(userVo);
+			
+			session = request.getSession(true);
+			session.setAttribute("authUser", userVo);
+			
+			MVCUtil.redirect(request.getContextPath(), request, response);
+		}else {
 			MVCUtil.redirect(request.getContextPath(), request, response);
 		}
 
