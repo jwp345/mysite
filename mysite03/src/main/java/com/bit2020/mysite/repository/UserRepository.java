@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.bit2020.mysite.exception.UserRepositoryException;
 import com.bit2020.mysite.vo.UserVo;
 
 @Repository
@@ -37,7 +38,8 @@ public class UserRepository {
 			
 			
 		} catch (SQLException e) {
-			System.out.println("에러:" + e);
+			//System.out.println("에러:" + e);
+			throw new UserRepositoryException();
 		} finally {
 			try {
 				if(pstmt != null) {
@@ -52,7 +54,8 @@ public class UserRepository {
 		}
 		return result;
 	}
-	public UserVo findByNo(Long no) {
+	
+	public UserVo findByNo(Long no) throws UserRepositoryException {
 		UserVo result = null;
 		ResultSet rs = null;
 		Connection connection = null;
@@ -83,7 +86,7 @@ public class UserRepository {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("에러:" + e);
+			throw new UserRepositoryException();
 		} finally {
 			try {
 				if(rs != null) {
@@ -101,7 +104,7 @@ public class UserRepository {
 		}
 		return result;
 	}
-	public UserVo findByEmailAndPassword(String email, String password) {
+	public UserVo findByEmailAndPassword(String email, String password) throws UserRepositoryException{
 		UserVo result = null;
 		ResultSet rs = null;
 		Connection connection = null;
@@ -133,7 +136,7 @@ public class UserRepository {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("에러:" + e);
+			throw new UserRepositoryException();
 		} finally {
 			try {
 				if(rs != null) {
@@ -157,7 +160,7 @@ public class UserRepository {
 		boolean result = false;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+	
 		try {
 			
 			// 1. JDBC Driver(MariaDB Driver)
