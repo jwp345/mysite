@@ -17,11 +17,11 @@ public class GuestbookService {
 		return guestbookRepository.findAll();
 	}
 
-	public void insert(GuestbookVo vo) {
+	public void addList(GuestbookVo vo) {
 		guestbookRepository.insert(vo);
 	}
 
-	public void delete(GuestbookVo vo) {
+	public void deleteVo(GuestbookVo vo) {
 		guestbookRepository.delete(vo);
 	}
 }

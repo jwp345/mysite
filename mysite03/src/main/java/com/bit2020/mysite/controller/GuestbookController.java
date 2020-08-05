@@ -22,7 +22,6 @@ public class GuestbookController {
 	@RequestMapping("")
 	public String index(Model model) {
 		List<GuestbookVo> list = guestbookService.getMessageList();
-		
 		model.addAttribute("list", list);
 		return "/guestbook/index";
 	}
@@ -36,13 +35,13 @@ public class GuestbookController {
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(GuestbookVo vo) {
-		guestbookService.insert(vo);
+		guestbookService.addList(vo);
 		return "redirect:/guestbook/";
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public String delete(GuestbookVo vo) {
-		guestbookService.delete(vo);
+		guestbookService.deleteVo(vo);
 		return "redirect:/guestbook/";
 	}
 }
