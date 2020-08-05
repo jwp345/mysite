@@ -8,22 +8,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.bit2020.mysite.repository.GuestbookRepository;
+import com.bit2020.mysite.service.GuestbookService;
 import com.bit2020.mysite.vo.GuestbookVo;
 
 @Controller
-@RequestMapping("/gb")
+
+@RequestMapping("/guestbook")
 public class GuestbookController {
 	
 	@Autowired
-	private GuestbookRepository guestbookRepository;
+	private GuestbookService guestbookService;
+	
 	@RequestMapping("")
 	public String index(Model model) {
-		List<GuestbookVo> list = guestbookRepository.findAll();
+		List<GuestbookVo> list = guestbookService.getMessageList();
+		
 		model.addAttribute("list", list);
-		return "/guestbook/list";
+		return "/guestbook/index";
 	}
 	
 	@RequestMapping("/deleteform/{no}")
@@ -35,14 +36,13 @@ public class GuestbookController {
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(GuestbookVo vo) {
-		guestbookRepository.insert(vo);
-		return "redirect:/gb/";
+		guestbookService.insert(vo);
+		return "redirect:/guestbook/";
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String delete(@RequestParam(value="no", required=true, defaultValue="0") long no,
-			@RequestParam(value="password", required=true, defaultValue="") String password) {
-		guestbookRepository.delete(no, password);
-		return "redirect:/gb/";
+	public String delete(GuestbookVo vo) {
+		guestbookService.delete(vo);
+		return "redirect:/guestbook/";
 	}
 }
