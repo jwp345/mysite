@@ -33,11 +33,13 @@
 					</tr>				
 					<tr>
 						<td>[${listCount - status.index }]</td>
-						<td><a href="${pageContext.request.contextPath }/board/view">${vo.title }</a></td>
+						<td><a href="${pageContext.request.contextPath }/board/view/${vo.no }">${vo.title }</a></td>
 						<td>${vo.name }</td>
 						<td>${vo.hit }</td>
 						<td>${vo.regDate }</td>
-						<td><a href="${pageContext.request.contextPath }/board/delete" class="del">삭제</a></td>
+						<c:if test="${vo.userNo eq authUser.no }">
+							<td><a href="${pageContext.request.contextPath }/board/delete/${vo.no }" class="del">삭제</a></td>
+						</c:if>
 					</tr>
 				</table>
 				</c:forEach>

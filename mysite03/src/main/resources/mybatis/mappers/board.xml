@@ -18,4 +18,38 @@
 		values (null, #{title }, #{content }, 0, now(), #{userNo });
 		]]>
 	</insert>
+	
+	<select id="findbyNo" parameterType="long" resultType="boardvo">
+		<![CDATA[
+		select no, title, content, user_no as userNo
+		  from board
+		 where no=#{no }
+		]]>
+	</select>	
+	
+	<update id="update" parameterType="boardvo">
+		<choose>
+			<when test='title != ""'>
+				<![CDATA[
+				update board
+				   set title=#{title },
+					   content=#{content }
+				 where no=#{no } and user_no = #{userNo }
+				]]>
+			</when>
+			<otherwise>
+				<![CDATA[
+				update board
+				   set content=#{content }
+				 where no=#{no } and user_no = #{userNo }				
+				]]>
+			</otherwise>
+		</choose>
+	</update>	
+	
+	<delete id="delete" parameterType="boardvo">
+	<![CDATA[
+		delete from board where no =#{no } and user_no = #{userNo }
+		]]>
+	</delete>
 </mapper>

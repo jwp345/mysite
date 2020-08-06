@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,9 +43,36 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
-//	@Auth
-//	@RequestMapping(value="/delete", method=RequestMethod.GET)
-//	public String delete() {
-//		
-//	}
+	@RequestMapping("/view/{no}")
+	public String view(@PathVariable("no") long no, Model model) {
+		BoardVo vo = boardService.findbyNo(no);
+		model.addAttribute("vo", vo);
+		return "board/view";
+	}
+	
+	@Auth
+	@RequestMapping("/update/{no}")
+	public String update(@PathVariable("no") long no, Model model) {
+		BoardVo vo = boardService.findbyNo(no);
+		model.addAttribute("vo", vo);
+		return "board/modify";
+	}
+	
+	@Auth
+	@RequestMapping(value="/update/{no}", method=RequestMethod.POST)
+	public String update(@PathVariable("no") long no, BoardVo vo) {
+		BoardVo cur = boardService.findbyNo(no);
+		cur.setContent(vo.getContent());
+		cur.setTitle(vo.getTitle());
+		boardService.update(cur);
+		return "redirect:/board";
+	}
+	
+	@Auth
+	@RequestMapping(value="/delete/{no}")
+	public String delete(@PathVariable("no") long no) {
+		BoardVo vo = boardService.findbyNo(no);
+		boardService.delete(vo);
+		return "redirect:/board";
+	}
 }

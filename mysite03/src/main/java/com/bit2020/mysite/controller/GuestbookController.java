@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bit2020.mysite.security.Auth;
 import com.bit2020.mysite.service.GuestbookService;
 import com.bit2020.mysite.vo.GuestbookVo;
 

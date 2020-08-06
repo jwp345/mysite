@@ -22,5 +22,19 @@ public class BoardRepository {
 		int count = sqlSession.insert("board.save", vo);
 		return count == 1;
 	}
+
+	public BoardVo findbyNo(long no) {
+		return sqlSession.selectOne("board.findbyNo", no);
+	}
+
+	public boolean update(BoardVo vo) {
+		int count = sqlSession.update("board.update", vo);
+		return count == 1;
+	}
+
+	public boolean delete(BoardVo vo) {
+		int count = sqlSession.delete("board.delete", vo);
+		return count==1;
+	}
 	
 }

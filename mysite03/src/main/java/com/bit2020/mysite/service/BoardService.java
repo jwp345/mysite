@@ -20,5 +20,17 @@ public class BoardService {
 	public void write(BoardVo vo) {
 		boardRepository.save(vo);
 	}
+
+	public BoardVo findbyNo(long no) {
+		return boardRepository.findbyNo(no);
+	}
+
+	public void update(BoardVo vo) {
+		boardRepository.update(vo);
+	}
+
+	public void delete(BoardVo vo) {
+		boardRepository.delete(vo);
+	}
 	
 }
