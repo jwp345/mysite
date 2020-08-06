@@ -20,7 +20,6 @@ public class GuestbookController {
 	@Autowired
 	private GuestbookService guestbookService;
 	
-	@Auth
 	@RequestMapping("")
 	public String index(Model model) {
 		List<GuestbookVo> list = guestbookService.getMessageList();
