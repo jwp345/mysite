@@ -8,6 +8,6 @@ insert into user values(null, '편재원', 'jwp135@naver.com', password('1234'),
 -- login
 select no, name from user where email='jwp135@naver.com' and password=password('1234');
 
-delete from user where email is null;
+delete from user where no = 8;
 
-update user set name='joy', password=password('2'), gender='male' where email='dooly';
+update user set name='joy', password=password('2'), gender='male' where email='';

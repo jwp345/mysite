@@ -1,13 +1,13 @@
 package com.bit2020.mysite.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.bit2020.mysite.security.Auth;
+import com.bit2020.mysite.security.AuthUser;
 import com.bit2020.mysite.service.UserService;
 import com.bit2020.mysite.vo.UserVo;
 
@@ -38,9 +38,10 @@ public class UserController {
 		return "user/login";
 	}
 	
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+	public String update(@AuthUser UserVo authUser, Model model) {
+		
 		Long no = authUser.getNo();
 		
 		UserVo userVo = userService.getUser(no);
@@ -49,9 +50,9 @@ public class UserController {
 		return "user/update";
 	}
 
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, UserVo vo) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+	public String update(@AuthUser UserVo authUser, UserVo vo) {
 		vo.setNo(authUser.getNo());
 		
 		userService.updateUser(vo);

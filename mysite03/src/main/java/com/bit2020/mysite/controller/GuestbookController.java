@@ -8,17 +8,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.bit2020.mysite.security.Auth;
 import com.bit2020.mysite.service.GuestbookService;
 import com.bit2020.mysite.vo.GuestbookVo;
 
 @Controller
-
 @RequestMapping("/guestbook")
 public class GuestbookController {
 	
 	@Autowired
 	private GuestbookService guestbookService;
 	
+	@Auth
 	@RequestMapping("")
 	public String index(Model model) {
 		List<GuestbookVo> list = guestbookService.getMessageList();
