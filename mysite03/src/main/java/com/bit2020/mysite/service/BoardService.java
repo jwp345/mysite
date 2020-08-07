@@ -32,5 +32,9 @@ public class BoardService {
 	public void delete(BoardVo vo) {
 		boardRepository.delete(vo);
 	}
+
+	public void hit(long no) {
+		boardRepository.hit(no);
+	}
 	
 }

@@ -47,6 +47,13 @@
 		</choose>
 	</update>	
 	
+	<update id="hit" parameterType="long">
+		<![CDATA[
+			update board
+			set hit=hit+1
+			where no=#{no }
+		]]>
+	</update>
 	<delete id="delete" parameterType="boardvo">
 	<![CDATA[
 		delete from board where no =#{no } and user_no = #{userNo }

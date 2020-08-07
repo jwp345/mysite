@@ -36,5 +36,10 @@ public class BoardRepository {
 		int count = sqlSession.delete("board.delete", vo);
 		return count==1;
 	}
+
+	public boolean hit(long no) {
+		int count = sqlSession.update("board.hit", no);
+		return count == 1;
+	}
 	
 }
