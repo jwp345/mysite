@@ -36,5 +36,9 @@ public class BoardService {
 	public void hit(long no) {
 		boardRepository.hit(no);
 	}
+
+	public List<BoardVo> findAllbyKwd(String kwd) {
+		return boardRepository.findAllbyKwd(kwd);
+	}
 	
 }

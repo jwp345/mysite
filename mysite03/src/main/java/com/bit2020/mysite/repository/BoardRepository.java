@@ -41,5 +41,9 @@ public class BoardRepository {
 		int count = sqlSession.update("board.hit", no);
 		return count == 1;
 	}
+
+	public List<BoardVo> findAllbyKwd(String kwd) {
+		return sqlSession.selectList("board.findbyKwd", kwd);
+	}
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bit2020.mysite.security.Auth;
 import com.bit2020.mysite.security.AuthUser;
@@ -75,5 +76,13 @@ public class BoardController {
 		BoardVo vo = boardService.findbyNo(no);
 		boardService.delete(vo);
 		return "redirect:/board";
+	}
+	
+	@RequestMapping(value="/search", method=RequestMethod.POST)
+	public String search(@RequestParam(value="kwd", required=true, defaultValue="") String kwd, 
+			Model model) {
+		List<BoardVo> list = boardService.findAllbyKwd(kwd);
+		model.addAttribute("list", list);
+		return "board/list";
 	}
 }

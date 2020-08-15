@@ -54,9 +54,19 @@
 			where no=#{no }
 		]]>
 	</update>
+	
 	<delete id="delete" parameterType="boardvo">
 	<![CDATA[
 		delete from board where no =#{no } and user_no = #{userNo }
 		]]>
 	</delete>
+	
+	<select id="findbyKwd" parameterType="String" resultType="boardvo">
+		<![CDATA[
+		  select a.no, a.title, a.user_no as userNo, b.name, a.hit, date_format(a.reg_date, '%Y-%m-%d %h:%i:%s') as regDate
+    		from board a, user b 
+   			where a.user_no = b.no and (b.no = #{kwd } or b.name = #{kwd } or a.title = #{kwd })
+			order by reg_date desc; 
+		]]>
+	</select>
 </mapper>
