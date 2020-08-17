@@ -38,7 +38,7 @@
 							<url>http://127.0.0.1/manager/text</url>
 							<path>/mysite</path>
 							<username>admin</username>
-							<password>admin</password>
+							<password>manager</password>
 						</configuration>
 					</plugin>
 				</plugins>
